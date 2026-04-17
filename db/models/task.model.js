@@ -2,35 +2,56 @@ import mongoose from 'mongoose';
 
 const taskSchema = new mongoose.Schema(
   {
-    taskName: { type: String, required: true, trim: true },
-    taskTitle: { type: String, required: true, trim: true },
+    student: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     taskType: {
       type: String,
-      enum: ['personal', 'home', 'office', 'library', 'other'],
-      default: 'personal',
+      required: true,
+      trim: true,
     },
-    location: { type: String, trim: true },
+    title: {
+      type: String,
+      trim: true,
+    },
+    location: {
+      type: String,
+      trim: true,
+    },
+    deadline: {
+      type: Date,
+      required: true,
+    },
     priority: {
       type: String,
       enum: ['low', 'medium', 'high'],
       default: 'medium',
     },
-    deadline: { type: Date, required: true },
-    rewardCoins: { type: Number, default: 50 },
-
-    teacher: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
+    status: {
+      type: String,
+      enum: ['active', 'completed'],
+      default: 'active',
     },
-    assignedGroup: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Group',
-      required: true,
+    completedAt: {
+      type: Date,
+    },
+    rewardCoins: {
+      type: Number,
+      default: 50,
+    },
+    rewardGranted: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }
 );
 
-const Task = mongoose.model('Task', taskSchema);
-export default Task;
+export default mongoose.model('Task', taskSchema);

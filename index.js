@@ -1,33 +1,19 @@
 import express from 'express';
-import dotenv from 'dotenv';
-dotenv.config();
-
 import './db/connection.js';
 import { authRouter } from './modules/auth/auth.routes.js';
-import { groupRouter } from './modules/groups/group.routes.js';
-import { taskRouter } from './modules/tasks/task.routes.js';
-import { quizRouter } from './modules/quizzes/quiz.routes.js';
-import { rewardRouter } from './modules/rewards/reward.routes.js';
+import { taskRouter } from './modules/task/task.routes.js';
+import { audioRouter } from './modules/audio/audio.routes.js';
 
 const app = express();
 const port = process.env.PORT || 3001;
 
 app.use(express.json());
 
+// Routes
 app.use('/auth', authRouter);
-app.use('/groups', groupRouter);
 app.use('/tasks', taskRouter);
-app.use('/quizzes', quizRouter);
-app.use('/rewards', rewardRouter);
+app.use('/audio', audioRouter);
 
-// Global error handler
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(err.status || 500).json({
-    messageEng: err.message || 'Internal server error',
-  });
-});
+app.get('/', (req, res) => res.send('Hello World!'));
 
-app.get('/', (req, res) => res.json({ message: 'Edu App API is running 🚀' }));
-
-app.listen(port, () => console.log(`✅ Server listening on port ${port}`));
+app.listen(port, () => console.log(`listening on port ${port}!`));

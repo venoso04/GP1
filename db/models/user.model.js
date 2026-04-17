@@ -20,18 +20,12 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['student', 'teacher'],
+      enum: ['student'],
       default: 'student',
     },
     emailConfirmed: {
       type: Boolean,
       default: false,
-    },
-    // Student-only fields
-    group: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Group',
-      default: null,
     },
     coins: {
       type: Number,
@@ -41,5 +35,4 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const User = mongoose.model('User', userSchema);
-export default User;
+export default mongoose.model('User', userSchema);
